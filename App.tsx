@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'react-native';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import firebase from 'firebase/app';
@@ -7,9 +8,13 @@ import * as GoogleSignIn from 'expo-google-sign-in';
 
 import * as SplashScreen from 'expo-splash-screen';
 import Constants from 'expo-constants';
+import { LogBox } from 'react-native';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import SplashScreenComponent from './components/SplashScreen';
+
+LogBox.ignoreLogs([`Warning: ...`]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); // Ignore all log notifications
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -47,9 +52,9 @@ export default function App() {
       // eslint-disable-next-line global-require
       secondImage={require(`./assets/images/splash2.png`)}
     >
-      <SafeAreaProvider style={{ backgroundColor: `#fff` }}>
+      <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <StatusBar translucent />
       </SafeAreaProvider>
     </SplashScreenComponent>
   );

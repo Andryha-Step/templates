@@ -41,7 +41,7 @@ const Input: React.FC<TextFieldProps> = ({
         styles.input,
         { borderColor: meta.touched && meta.error ? `red` : `#F5C500` },
       ]}
-      placeholder={placeholder}
+      placeholder={placeholder.split(`*`)[0]}
       type={type}
       secureTextEntry={secureTextEntry}
       {...input}

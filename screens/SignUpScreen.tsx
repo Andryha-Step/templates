@@ -7,6 +7,7 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Form, Field, FieldRenderProps } from 'react-final-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -77,26 +78,30 @@ export default function SignUpScreen({
           <View>
             <Field
               name="firstName"
-              placeholder="First Name"
+              placeholder="First Name *"
               validate={required}
             >
               {({ input, meta, placeholder }) => (
                 <Input input={input} meta={meta} placeholder={placeholder} />
               )}
             </Field>
-            <Field name="lastName" placeholder="Last Name" validate={required}>
+            <Field
+              name="lastName"
+              placeholder="Last Name *"
+              validate={required}
+            >
               {({ input, meta, placeholder }) => (
                 <Input input={input} meta={meta} placeholder={placeholder} />
               )}
             </Field>
-            <Field name="email" placeholder="Email" validate={required}>
+            <Field name="email" placeholder="Email *" validate={required}>
               {({ input, meta, placeholder }) => (
                 <Input input={input} meta={meta} placeholder={placeholder} />
               )}
             </Field>
             <Field
               name="password"
-              placeholder="Password"
+              placeholder="Password *"
               validate={composeValidators(required, minLength(6))}
             >
               {({ input, meta, placeholder }) => (
@@ -128,7 +133,8 @@ export default function SignUpScreen({
                       value={input.value || new Date()}
                       mode="date"
                       is24Hour
-                      display="spinner"
+                      textColor="black"
+                      display={Platform.OS === `ios` ? `spinner` : `default`}
                       onChange={(e: any) => {
                         setIsDatePickerVisible(false);
                         if (e.nativeEvent.timestamp) {

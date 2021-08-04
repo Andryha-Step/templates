@@ -5,7 +5,8 @@ import AppLoading from 'expo-app-loading';
 import Constants from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
-import { Animated, Image, StyleSheet, View } from 'react-native';
+import { Animated, Image, StyleSheet, View, Text } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AnimatedAppLoader({ children, image, secondImage }) {
   const [isSplashReady, setSplashReady] = React.useState(false);
@@ -98,6 +99,7 @@ function AnimatedSplashScreen({ children, image, secondImage }) {
       } catch (e) {
         // handle errors
       } finally {
+        // StatusBar.setBackgroundColor(`#fff`);
         setAppReady(true);
       }
     },
@@ -119,8 +121,18 @@ function AnimatedSplashScreen({ children, image, secondImage }) {
     [],
   );
 
+  console.log(`isAnimReady`, isAnimReady);
+
   return (
-    <View style={{ flex: 1, backgroundColor }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor,
+      }}
+    >
+      {/* {isSplashAnimation2Complete && (
+        <StatusBar backgroundColor="#fff" translucent />
+      )} */}
       {isAppReady && isBetweenAnimReady && children}
       {!isSplashAnimationComplete && (
         <Animated.View
@@ -144,7 +156,9 @@ function AnimatedSplashScreen({ children, image, secondImage }) {
               //   },
               // ],
             }}
-            source={image}
+            source={{
+              uri: `https://raw.githubusercontent.com/real-festil/obviouslyyy-app/main/assets/images/splash.png`,
+            }}
             onLoadEnd={onImageLoaded}
             fadeDuration={0}
           />
@@ -168,7 +182,9 @@ function AnimatedSplashScreen({ children, image, secondImage }) {
               resizeMode: Constants.manifest!.splash!.resizeMode || `contain`,
               opacity: animation2,
             }}
-            source={secondImage}
+            source={{
+              uri: `https://raw.githubusercontent.com/real-festil/obviouslyyy-app/main/assets/images/splash2.png`,
+            }}
             onLoadEnd={onImage2Loaded}
             fadeDuration={0}
           />
