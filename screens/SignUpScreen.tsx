@@ -40,6 +40,17 @@ export default function SignUpScreen({
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const { user } = userCredential;
+        if (user) {
+          firebase
+            .database()
+            .ref(`users/${user.uid}`)
+            .set({
+              firstName,
+              lastName,
+              birthday: moment(birthday).format(),
+              email,
+            });
+        }
         if (user && user.emailVerified === false) {
           user
             .sendEmailVerification()
@@ -50,17 +61,6 @@ export default function SignUpScreen({
             })
             .catch((error) => {
               console.log(`error`, error);
-            });
-        }
-        if (user) {
-          firebase
-            .database()
-            .ref(`users/${user.uid}`)
-            .set({
-              firstName,
-              lastName,
-              birthday: JSON.stringify(birthday),
-              email,
             });
         }
       })
@@ -123,8 +123,8 @@ export default function SignUpScreen({
                   >
                     <Text style={{ color: input.value ? `black` : `gray` }}>
                       {input.value
-                        ? moment(input.value).format(`YYYY.MM.DD`)
-                        : `Select date`}
+                        ? moment(input.value).format(`YYYY-MM-DD`)
+                        : `Entry birthday`}
                     </Text>
                   </TouchableOpacity>
                   {isDatePickerVisible && (

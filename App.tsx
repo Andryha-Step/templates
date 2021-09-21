@@ -48,7 +48,7 @@ export default function App() {
   return (
     <SplashScreenComponent
       // eslint-disable-next-line global-require
-      image={{ uri: Constants.manifest.splash.image }}
+      image={{ uri: Constants?.manifest?.splash?.image }}
       // eslint-disable-next-line global-require
       secondImage={require(`./assets/images/splash2.png`)}
     >
